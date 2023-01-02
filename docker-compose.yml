@@ -1,0 +1,27 @@
+version: '3.6'
+services:
+  back:
+    build: 
+      context: ./back
+      target:  WebApp
+    image: wpbe/webpbackend
+    container_name: webpbackend-1
+    ports:
+      - 8090:8090
+    networks:
+      - frontback 
+
+  front:
+    build: ./front
+    image: building-frontend/dockerize-vuejs-app
+    container_name: dockerize-vuejs-app-1
+    ports:
+      - 8080:8080
+    depends_on:
+      - back
+    networks: 
+      - frontback     
+  
+networks: 
+  frontback:
+    driver: bridge
